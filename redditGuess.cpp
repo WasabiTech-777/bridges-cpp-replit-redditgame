@@ -58,9 +58,8 @@ int main(int argc, char** argv) {
   //Take SubReddit selection, here are the supported subreddits: http://bridges-data-server-reddit.bridgesuncc.org/list
   string input = subRedditSelect();
   vector<Reddit> reddit_list;
-  if(0 != input.compare("All SubReddits"))
-	  reddit_list = ds.getRedditData(input);
-  else
+  
+  if(0 == input.compare("All SubReddits"))
   {
     string strHelper;
     vector<Reddit> tempVec;
@@ -74,6 +73,27 @@ int main(int argc, char** argv) {
       //cout << reddit_list.size() << endl;
     }
   }
+  else if(0 == input.compare("100,000+ Post"))
+  {
+    // Duplicate All SubReddit Posts until reddit_list.size > 100,000
+    while(reddit_list.size() < 100000)
+      {
+        string strHelper;
+        vector<Reddit> tempVec;
+  
+        //read "subRedditList.txt"
+      ifstream readTxt("subRedditList.txt");
+      while (getline(readTxt, strHelper) && 0 != strHelper.compare("All SubReddits")) {
+        tempVec =  ds.getRedditData(strHelper);
+        //cout << strHelper << endl;
+        reddit_list.insert(reddit_list.end(), tempVec.begin(), tempVec.end());
+        cout << reddit_list.size() << endl;
+        }
+      }
+  }
+  else
+	  reddit_list = ds.getRedditData(input);
+  
   writeCSV(reddit_list);
   
   //int *allScores = new int[reddit_list.size()];
