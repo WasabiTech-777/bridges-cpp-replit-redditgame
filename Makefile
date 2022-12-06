@@ -1,4 +1,4 @@
-
+#make run
 # Fill in the path to your Repl folder root
 # default is the current directory; if you are in the repl folder, then no changes
 # are needed for this path
@@ -9,12 +9,12 @@ REPL_PATH=./
 # multiple source files are separated by spaces
 # Modify it to reflect your application's source files
 
-SRCS = CxxTest.cpp
+SRCS = redditGuess.cpp
 
 #
 # executable name -- modify to your executable name
 #
-EXE  = CxxTest
+EXE  = redditGuess
 
 #
 # Everything below that should not have to change ever.
