@@ -42,6 +42,7 @@ void printMenu1(redditPostContainer &redditObj);
 void printMenu2(redditPostContainer &redditObj);
 void printMenu3(redditPostContainer &redditObj);
 void printMenu4(redditPostContainer &redditObj);
+void writeCSV(vector<Reddit> &redLst);
 
 int main(int argc, char** argv) {
 
@@ -56,8 +57,25 @@ int main(int argc, char** argv) {
 
   //Take SubReddit selection, here are the supported subreddits: http://bridges-data-server-reddit.bridgesuncc.org/list
   string input = subRedditSelect();
+  vector<Reddit> reddit_list;
+  if(0 != input.compare("All SubReddits"))
+	  reddit_list = ds.getRedditData(input);
+  else
+  {
+    string strHelper;
+    vector<Reddit> tempVec;
   
-	vector<Reddit> reddit_list = ds.getRedditData(input);
+  //read "subRedditList.txt"
+    ifstream readTxt("subRedditList.txt");
+    while (getline(readTxt, strHelper) && 0 != strHelper.compare("All SubReddits")) {
+      tempVec =  ds.getRedditData(strHelper);
+      cout << strHelper << endl;
+      reddit_list.insert(reddit_list.end(), tempVec.begin(), tempVec.end());
+      //cout << reddit_list.size() << endl;
+    }
+  }
+  writeCSV(reddit_list);
+  
   //int *allScores = new int[reddit_list.size()];
   //copy objects from vector into dynamic array to be sorted
   for(unsigned int i = 0; i < reddit_list.size();i++){
@@ -236,8 +254,21 @@ void printMenu4(redditPostContainer &redditObj)
   cout << "The top 5 Posts on this SubReddit are: \n";
   for (int i = 1; i < 6; i++)
     {
-      cout << i << ") Score: " << cpy.getScore(cpy.postVec[size - i]) << " || "<< cpy.getTitle(cpy.postVec[size - i]) << endl;
+      cout << i << ") Score: " << cpy.getScore(cpy.postVec[size - i]) << " || Title: "<< cpy.getTitle(cpy.postVec[size - i]) << endl;
     }
   cout << endl;
   
+}
+
+void writeCSV(vector<Reddit> &redLst)
+{
+  ofstream fileReddit;
+  fileReddit.open ("redditData.csv");
+  for (auto post : redLst)
+    {
+      int scor = post.getScore();
+      string idPost = post.getID(), titlePost = post.getTitle();
+      fileReddit << scor <<","<< titlePost << "," << idPost << ",\n";
+    }
+  fileReddit.close();
 }
