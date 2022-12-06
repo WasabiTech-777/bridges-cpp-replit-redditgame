@@ -195,6 +195,13 @@ void printMenu2(redditPostContainer &redditObj){
 
       if(usrInput == 1)
       {//Merge Sort and Display time to Sort
+        
+        auto start = high_resolution_clock::now();
+        cpy.mergeSort();
+        auto stop = high_resolution_clock::now();
+        auto time = duration_cast<microseconds>(stop-start);
+        //Display time here
+        cout << "Time taken by Merge Sort: "<<time.count()<<" microseconds"<<endl;
         cout << endl;
       }
       else if(usrInput == 2)

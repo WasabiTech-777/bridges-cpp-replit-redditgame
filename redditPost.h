@@ -52,7 +52,9 @@ public:
   string getTitle(redditPost* postPtr);
 
   //Implement Merge Sort based on the "postVec[i]->score"
-
+  void mergeSortHelper(int left,int right);
+  void merge(int left, int mid, int right);
+  void mergeSort();
   //Implement Shell Sort based on the "postVec[i]->score"
   void shellSortHelper(int gap, int leftIndex);
   void insertionSort();
@@ -96,7 +98,49 @@ string redditPostContainer::getTitle(redditPost* postPtr)
   return postPtr->postTitle;
 }
 
-  void redditPostContainer::shellSortHelper(int gap, int leftIndex)
+void redditPostContainer::mergeSortHelper(int left,int right)
+{
+  if(left < right){
+    int mid = left + (right-left)/2;
+    mergeSortHelper(left,mid);
+    mergeSortHelper(mid+1,right);
+    merge(left,mid,right);
+  }
+}
+void redditPostContainer::merge(int left, int mid, int right)
+{ 
+  vector<redditPost*> tmp;
+ int i = left;
+ int j = mid +1;
+ while(i <= mid && j <= right){
+   if(postVec[i]->score <= postVec[i]->score){
+     tmp.push_back(postVec[i]);
+     i++;
+   }else{
+     tmp.push_back(postVec[j]);
+     j++;
+   }
+ }
+ while(i <= mid){
+   tmp.push_back(postVec[i]);
+   i++;
+ }
+ while(j <= right){
+   tmp.push_back(postVec[j]);
+   j++;
+ }
+ for(int i = left; i <= right; i++){
+   postVec[i]=tmp[i-left];
+ }
+}
+void redditPostContainer::mergeSort()
+{
+  int left = 0;
+  int right = postVec.size()-1;
+  mergeSortHelper(left,right);
+}
+
+void redditPostContainer::shellSortHelper(int gap, int leftIndex)
 {
     int rightIndex = leftIndex + gap;
     if (rightIndex < postVec.size()) //
