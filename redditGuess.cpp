@@ -182,12 +182,14 @@ void printMenu2(redditPostContainer &redditObj){
   cout << endl;
   
   int usrInput = 0;
-  
+  int sumMerge = 0, countMerge = 0;
+  int sumShell = 0, countShell = 0;
   
   while(usrInput != 3)
     {
       // make a copy of our object to perform analysis on
       redditPostContainer cpy(redditObj);
+      
       
       cout << "Input desired option's corresponding number \n" << "1) Merge Sort \n" << "2) Shell Sort \n" << "3) Previous Menu" << endl;
       
@@ -195,6 +197,7 @@ void printMenu2(redditPostContainer &redditObj){
 
       if(usrInput == 1)
       {//Merge Sort and Display time to Sort
+        countMerge++;
         
         auto start = high_resolution_clock::now();
         cpy.mergeSort();
@@ -202,10 +205,14 @@ void printMenu2(redditPostContainer &redditObj){
         auto time = duration_cast<microseconds>(stop-start);
         //Display time here
         cout << "Time taken by Merge Sort: "<<time.count()<<" microseconds"<<endl;
+        sumMerge += time.count();
+        cout << "Average Time taken by Merge Sort: "<< sumMerge / countMerge <<" microseconds after " << countMerge << " Merge Sorts"<<endl;
         cout << endl;
       }
       else if(usrInput == 2)
       {//Shell Sort and Display time to Sort
+        countShell++;
+        
         auto start = high_resolution_clock::now();
         cpy.shellSort();
         auto stop = high_resolution_clock::now();
@@ -213,6 +220,8 @@ void printMenu2(redditPostContainer &redditObj){
         //Display time here
         cout << "Time taken by Shell Sort: "
          << time.count() << " microseconds" << endl;
+        sumShell += time.count();
+        cout << "Average Time taken by Shell Sort: "<< sumShell / countShell <<" microseconds after " << countShell << " Shell Sorts"<<endl;
         cout << endl;
       }
       else if (usrInput == 3)
