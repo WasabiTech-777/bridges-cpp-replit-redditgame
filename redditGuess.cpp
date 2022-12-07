@@ -19,23 +19,6 @@ using namespace bridges;
 
 // This program fragment illustrates how to access and read the Reddit Post data 
 
-//merge helper method
-/*void merge(int[] allScores, int begin,int middle,int end){
-  
-}*/
-//merge sort method
-/*void merge(int[] allScores, int begin, int middle, int end);
-
-void mergeSort(int[] allScores, int begin, int end){
-  if (begin >= end){
-    return;
-  }
-  int middle = (begin+end)/2;
-  mergeSort(allScores,begin,middle);
-  mergeSort(allScores,middle+1,end);
-  merge(allScores,begin,middle,end);
-}*/
-
 //Declare functions here
 string subRedditSelect();
 void printMenu1(redditPostContainer &redditObj);
@@ -70,7 +53,6 @@ int main(int argc, char** argv) {
       tempVec =  ds.getRedditData(strHelper);
       cout << strHelper << endl;
       reddit_list.insert(reddit_list.end(), tempVec.begin(), tempVec.end());
-      //cout << reddit_list.size() << endl;
     }
   }
   else if(0 == input.compare("100,000+ Post"))
@@ -85,7 +67,7 @@ int main(int argc, char** argv) {
       ifstream readTxt("subRedditList.txt");
       while (getline(readTxt, strHelper) && 0 != strHelper.compare("All SubReddits")) {
         tempVec =  ds.getRedditData(strHelper);
-        //cout << strHelper << endl;
+        
         reddit_list.insert(reddit_list.end(), tempVec.begin(), tempVec.end());
         cout << reddit_list.size() << endl;
         }
@@ -96,7 +78,6 @@ int main(int argc, char** argv) {
   
   writeCSV(reddit_list);
   
-  //int *allScores = new int[reddit_list.size()];
   //copy objects from vector into dynamic array to be sorted
   for(unsigned int i = 0; i < reddit_list.size();i++){
     
@@ -107,17 +88,12 @@ int main(int argc, char** argv) {
 
     redditObj.insertPost(scor, titlePost, idPost);
     
-		//std::cout << "CommentCount: " << post.getCommentCount() << "\n";
-		//std::cout << "Subreddit: " << post.getSubreddit() << "\n";
-		//std::cout << "\n";
 	}
   redditObj.printSize();
 
   // Present "Menu 1"
   printMenu1(redditObj);
   
-  //std::cout << "Array Size: "<< allScores.size()<<"\n";
-  //delete[] allScores;
   
 	return 0;
 }
@@ -245,7 +221,6 @@ void printMenu3(redditPostContainer &redditObj){
     while (randomIndex1 == randomIndex2 || redditObj.getScore(randomIndex1) == redditObj.getScore(randomIndex2)) 
       randomIndex2 = rand() % redditObj.postVec.size();
 
-    // cout << randomIndex1 << " " << randomIndex2 << endl;
 
     // Prompt Player to select the one that seems to have a higher score
     cout << "Which Title has the higher Reddit Score OR Select Previous Menu \n" << "1) " << redditObj.getTitle(randomIndex1) << " \n"<< "2) " << redditObj.getTitle(randomIndex2) << " \n"<< "3) Previous Menu" << endl;

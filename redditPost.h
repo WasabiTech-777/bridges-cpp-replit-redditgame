@@ -32,8 +32,6 @@ public:
   }
   // Copy Constructor
   redditPostContainer(redditPostContainer& cpy);
-  // Copy Overload
-  //redditPostContainer& operator=(redditPostContainer& cpy);
   
   //Destructor
   ~redditPostContainer() // Deletes the vector of dynamic object Pointers
@@ -69,8 +67,6 @@ redditPostContainer::redditPostContainer(redditPostContainer& cpy)
       postVec.push_back(new redditPost(it->score, it->postTitle, it->postId));
     }
 }
-//redditPostContainer& redditPostContainer::operator=(redditPostContainer& cpy)
-//{}
 
 void redditPostContainer::insertPost(int& _score, string& _title, string& _id)
   {
